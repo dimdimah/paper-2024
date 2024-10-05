@@ -4,6 +4,10 @@ const nextConfig = {
     remotePatterns: [
       {
         hostname: "https://qrstok-api.my.id/",
+        hostname: "qrstok-api.my.id",
+      },
+      {
+        hostname: "placehold.co",
       },
     ],
   },
