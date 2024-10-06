@@ -1,38 +1,12 @@
 "use client";
 import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import TableSkeleton from "@/components/TabelSkeleton";
 import { SearchIcon } from "lucide-react";
 import debounce from "lodash.debounce";
-
-interface Product {
-  id: number;
-  name: string;
-  type: string;
-  stock: number;
-  secretCode: string;
-  qrCode: string;
-  color: string;
-  size: string;
-  price: string;
-  image: string;
-}
-
-interface ApiResponse {
-  status: string;
-  message: string;
-  data: Product[];
-}
+import Loading from "./loading";
+import { fetchProducts, Product } from "@/lib/api/products_api";
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -40,29 +14,21 @@ const ProductList = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // Fetching data Products dari API
   useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}items`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data: ApiResponse = await response.json();
-        setProducts(data.data);
+        const productsData = await fetchProducts();
+        setProducts(productsData);
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Data fetching error");
         setLoading(false);
       }
     };
-    fetchProducts();
+    loadProducts();
   }, []);
 
-  // Search handler dengan lodash debounce
   const debouncedSearch = useMemo(
     () =>
       debounce((value: string) => {
@@ -75,21 +41,15 @@ const ProductList = () => {
     debouncedSearch(event.target.value);
   };
 
-  // Filtering data Products
   const filteredProducts = useMemo(() => {
     return products.filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [searchTerm, products]);
 
-  // Kondisi loading atau error
-  if (loading) return <TableSkeleton />;
+  if (loading) return <Loading />;
   if (error)
-    return (
-      <div className="text-center text-red-500 flex items-center justify-center">
-        Error: {error}
-      </div>
-    );
+    return <div className="text-center text-red-500">Error: {error}</div>;
 
   return (
     <Card>
@@ -112,7 +72,9 @@ const ProductList = () => {
             {filteredProducts.map((product) => (
               <div key={product.id} className="border rounded-md p-2">
                 <Image
-                  src={`https://placehold.co/600x400/png`}
+                  src={`${
+                    process.env.NEXT_PUBLIC_API_BASE_URL
+                  }${product.image.replace("public/", "")}`}
                   alt={product.name}
                   width={500}
                   height={300}
@@ -128,7 +90,7 @@ const ProductList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8">No products found</div>
+          <div className="text-center py-8">Data Produk Kosong</div>
         )}
       </CardContent>
     </Card>

@@ -14,6 +14,7 @@ export default async function Header() {
           {userId ? (
             <div className="flex gap-4 items-center">
               <Link href="/dashboard">Dashboard</Link>
+              <Link href="/catalog">Tambah Barang</Link>
               <div className="flex items-center gap-2">
                 {user?.username}
                 <UserButton afterSignOutUrl="/" />
