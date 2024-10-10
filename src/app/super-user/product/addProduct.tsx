@@ -106,17 +106,16 @@ const AddItemForm: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Add Product</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Tambah Barang</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you're done.
           </DialogDescription>
         </DialogHeader>
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-6 ">Tambah Barang Baru</h2>
+        <div className="max-w-md mx-auto">
           {error && (
             <Alert variant="destructive" className="mb-4">
               <AlertDescription className="text-red-500">
@@ -203,14 +202,12 @@ const AddItemForm: React.FC = () => {
                 accept="image/*"
               />
             </div>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? "Sedang Menambahkan..." : "Tambah Barang"}
             </Button>
           </form>
         </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );
