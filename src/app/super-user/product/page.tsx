@@ -84,9 +84,9 @@ const ProductList = () => {
                       process.env.NEXT_PUBLIC_API_BASE_URL
                     }${product.image.replace("public/", "")}`}
                     alt={product.name}
-                    width={500}
-                    height={300}
-                    className="rounded-md object-cover"
+                    width={350}
+                    height={350}
+                    className="object-cover w-full max-h-64"
                   />
                   <p className="font-bold text-lg mt-2">{product.name}</p>
                   <p>Type: {product.type}</p>

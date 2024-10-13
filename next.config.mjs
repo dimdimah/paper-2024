@@ -9,6 +9,10 @@ const nextConfig = {
       {
         hostname: "placehold.co",
       },
+      {
+        hostname: "https://snhjwljuupgicvbwdhvz.supabase.co",
+        hostname: "snhjwljuupgicvbwdhvz.supabase.co",
+      },
     ],
   },
 };
