@@ -22,6 +22,7 @@ interface NewItem {
   color: string;
   size: string;
   price: string;
+  description: string;
 }
 
 const AddItemForm: React.FC = () => {
@@ -32,6 +33,7 @@ const AddItemForm: React.FC = () => {
     color: "",
     size: "",
     price: "",
+    description: "",
   });
   const [image, setImage] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -89,6 +91,7 @@ const AddItemForm: React.FC = () => {
           color: "",
           size: "",
           price: "",
+          description: "",
         });
         setImage(null);
       } else {
@@ -188,6 +191,16 @@ const AddItemForm: React.FC = () => {
                 id="price"
                 name="price"
                 value={newItem.price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="price">Deskripsi</Label>
+              <Input
+                id="description"
+                name="description"
+                value={newItem.description}
                 onChange={handleChange}
                 required
               />
